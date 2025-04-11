@@ -2,14 +2,19 @@
   "name": "wad-201-midterm-portfolio-project",
   "version": "1.0.0",
   "description": "## Goal",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build:css": "sass -w src/sass:src/css",
-    "live": "live-server src --verbose",
-    "dev": "concurrently \"npm run build:css\" \"npm run live\""
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "astro": "latest"
+  },
   "devDependencies": {
     "concurrently": "^8.2.1",
     "live-server": "^1.2.2",
