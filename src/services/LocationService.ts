@@ -1,10 +1,12 @@
+import { LocationResponse } from '../responses/LocationResponse';
+
 export const DEFAULT_CITY = 'Vancouver';
 export const DEFAULT_COORDS = {
   latitude: 49.2827,
   longitude: -123.1207
 };
 
-export const getCurrentLocation = async () => {
+export const getCurrentLocation = async (): Promise<LocationResponse> => {
   return new Promise((resolve) => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -21,7 +23,8 @@ export const getCurrentLocation = async () => {
             );
             const data = await response.json();
             const city = data.address.city || data.address.town || data.address.village;
-            resolve({ latitude, longitude, city });
+            const result: LocationResponse = { latitude, longitude, city };
+            resolve(result);
           } catch (error) {
             console.error('Failed to reverse geocode:', error);
             resolve({ ...DEFAULT_COORDS, city: DEFAULT_CITY });
