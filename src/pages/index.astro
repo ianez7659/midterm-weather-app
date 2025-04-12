@@ -18,6 +18,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   const locationStatus = document.getElementById('locationStatus');
   const updateLocationStatus = async () => {
+    if (!locationStatus) return;
+    
     locationStatus.textContent = 'Getting location...';
 
     const data = await getCurrentLocation();
