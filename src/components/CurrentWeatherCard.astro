@@ -1,0 +1,17 @@
+---
+import { CurrentWeatherCardUIModel } from '../uimodels/TopPageUIModel';
+
+interface Props {
+  model: CurrentWeatherCardUIModel;
+}
+
+const { model } = Astro.props;
+---
+
+<div>
+  <h2 class="text-2xl font-bold">Current Weather</h2>
+  <p>Temperature: {model.temperature}°C</p>
+  <p>Weather: {model.weather}</p>
+  <p>Humidity: {model.humidity}%</p>
+  <p>Wind Speed: {model.windSpeed}m/s</p>
+</div> 
