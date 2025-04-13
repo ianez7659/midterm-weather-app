@@ -40,8 +40,8 @@ export const convertToTopPageUIModel = (
   const currentWeather: CurrentWeatherCardUIModel = {
     location,
     temperature: currentWeatherResponse.current_weather.temperature,
-    humidity: 0, // TODO: Add humidity  
-    pressure: 0, // TODO: Add pressure
+    humidity: currentWeatherResponse.relativehumidity_2m,
+    pressure: currentWeatherResponse.surface_pressure,
     windSpeed: currentWeatherResponse.current_weather.windspeed,
     windDirection: currentWeatherResponse.current_weather.winddirection,
     weather: weatherCodeToWeather(currentWeatherResponse.current_weather.weathercode),
@@ -60,7 +60,7 @@ export const convertToTopPageUIModel = (
     forecasts: forecastResponse.hourly.time.map((time, index) => ({
       time,
       temperature: forecastResponse.hourly.temperature[index],
-      humidity: 0, // TODO: Add humidity
+      humidity: forecastResponse.hourly.relativehumidity_2m[index],
       weather: weatherCodeToWeather(forecastResponse.hourly.weathercode[index]),
     })),
   };

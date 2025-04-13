@@ -6,4 +6,6 @@ export interface CurrentWeatherResponse {
     weathercode: number;
     time: string;
   };
+  relativehumidity_2m: number;
+  surface_pressure: number;
 } 

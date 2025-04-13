@@ -7,7 +7,7 @@ const BASE_URL = 'https://api.open-meteo.com/v1';
 export const getCurrentWeather = async (latitude: number, longitude: number): Promise<CurrentWeatherResponse> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relativehumidity_2m,surface_pressure`
     );
 
     if (!response.ok) {
@@ -15,14 +15,11 @@ export const getCurrentWeather = async (latitude: number, longitude: number): Pr
     }
 
     const data = await response.json();
-    const weatherCode = data.current_weather.weathercode;
-    
     return {
-      current_weather: {
-        ...data.current_weather,
-        weather: WEATHER_CODES[weatherCode] || 'No weather code'
-      }
-    }
+      current_weather: data.current_weather,
+      relativehumidity_2m: data.hourly.relativehumidity_2m[0],
+      surface_pressure: data.hourly.surface_pressure[0]
+    };
   } catch (error) {
     console.error('Error fetching weather data:', error);
     throw error;
@@ -44,11 +41,9 @@ export const getForecast = async (latitude: number, longitude: number): Promise<
       ...data,
       hourly: {
         ...data.hourly,
-        weather: data.hourly.weathercode.map((code: number) => WEATHER_CODES[code] || 'No weather code')
       },
       daily: {
         ...data.daily,
-        weather: data.daily.weathercode.map((code: number) => WEATHER_CODES[code] || 'No weather code')
       }
     } as ForecastResponse;
   } catch (error) {

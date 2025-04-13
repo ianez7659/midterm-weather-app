@@ -4,6 +4,8 @@ export interface ForecastResponse {
     temperature: number[];
     precipitation_probability: number[];
     weathercode: number[];
+    relativehumidity_2m: number[];
+    surface_pressure: number[];
   };
   daily: {
     time: string[];
