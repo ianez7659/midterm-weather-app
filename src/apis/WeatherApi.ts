@@ -7,7 +7,7 @@ const BASE_URL = 'https://api.open-meteo.com/v1';
 export const getCurrentWeather = async (latitude: number, longitude: number): Promise<CurrentWeatherResponse> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relativehumidity_2m,surface_pressure`
+      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m,surface_pressure,weathercode&forecast_days=1`
     );
 
     if (!response.ok) {
@@ -15,6 +15,8 @@ export const getCurrentWeather = async (latitude: number, longitude: number): Pr
     }
 
     const data = await response.json();
+    console.log('Current Weather API Response:', data);
+
     return {
       current_weather: data.current_weather,
       relativehumidity_2m: data.hourly.relativehumidity_2m[0],
@@ -29,7 +31,7 @@ export const getCurrentWeather = async (latitude: number, longitude: number): Pr
 export const getForecast = async (latitude: number, longitude: number): Promise<ForecastResponse> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation_probability,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&forecast_days=5`
+      `${BASE_URL}/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation_probability,weathercode,relativehumidity_2m,surface_pressure&daily=weathercode,temperature_2m_max,temperature_2m_min&forecast_days=5`
     );
 
     if (!response.ok) {
@@ -38,14 +40,21 @@ export const getForecast = async (latitude: number, longitude: number): Promise<
 
     const data = await response.json();
     return {
-      ...data,
       hourly: {
-        ...data.hourly,
+        time: data.hourly.time,
+        temperature: data.hourly.temperature_2m,
+        precipitation_probability: data.hourly.precipitation_probability,
+        weathercode: data.hourly.weathercode,
+        relativehumidity_2m: data.hourly.relativehumidity_2m,
+        surface_pressure: data.hourly.surface_pressure
       },
       daily: {
-        ...data.daily,
+        time: data.daily.time,
+        temperature_max: data.daily.temperature_2m_max,
+        temperature_min: data.daily.temperature_2m_min,
+        weathercode: data.daily.weathercode
       }
-    } as ForecastResponse;
+    };
   } catch (error) {
     console.error('Error fetching forecast data:', error);
     throw error;
