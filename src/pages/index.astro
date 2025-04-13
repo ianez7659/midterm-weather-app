@@ -35,8 +35,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         locationStatus.textContent = `
           Current location: ${data.city}
-          Weather: ${weatherData.current_weather.weather}
-          Forecast: ${forecastData.daily.weather}
+          Weather: ${weatherData.current_weather.weathercode}
+          Forecast: ${forecastData.daily.weathercode}
         `;
         console.log('Using city:', data.city);
         console.log('Weather data:', weatherData);

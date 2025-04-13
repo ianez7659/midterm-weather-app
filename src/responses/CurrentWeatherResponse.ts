@@ -5,6 +5,5 @@ export interface CurrentWeatherResponse {
     winddirection: number;
     weathercode: number;
     time: string;
-    weather: string;
   };
 } 
