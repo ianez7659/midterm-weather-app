@@ -1,48 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CurrentWeatherCard from '../components/CurrentWeatherCard.astro';
+import DailyForecastSection from '../components/DailyForecastSection.astro';
+import HourlyForecastSection from '../components/HourlyForecastSection.astro';
+import Error from '../components/Error.astro';
+import Loading from '../components/Loading.astro';
+import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
+import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
+import { TopPageUIModel } from '../uimodels/TopPageUIModel';
+
+// Get location from URL parameters
+const searchParams = Astro.url.searchParams;
+const lat = searchParams.get('lat');
+const lon = searchParams.get('lon');
+const city = searchParams.get('city');
+
+let uiModel: TopPageUIModel;
+
+// Determine location
+if (!lat || !lon || !city) {
+  uiModel = { type: 'loading' };
+} else {
+  const location = {
+    latitude: parseFloat(lat),
+    longitude: parseFloat(lon),
+    city
+  };
+
+  console.log("Server side - Determined location:", location);
+
+  try {
+    // Get weather data in parallel
+    const [currentWeather, forecast] = await Promise.all([
+      getCurrentWeather(location.latitude, location.longitude),
+      getForecast(location.latitude, location.longitude)
+    ]);
+    uiModel = convertToTopPageUIModel(currentWeather, forecast, location.city);
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    uiModel = { type: 'failure' };
+  }
+}
 ---
 
 <BaseLayout>
-
+  <div class="container mx-auto px-4 py-8">
+    {uiModel.type === 'success' && (
+      <>
+        <CurrentWeatherCard model={uiModel.currentWeather} />
+        <div class="mt-8">
+          <DailyForecastSection model={uiModel.dailyForecast} />
+        </div>
+        <div class="mt-8">
+          <HourlyForecastSection model={uiModel.hourlyForecast} />
+        </div>
+      </>
+    )}
+    {uiModel.type === 'failure' && <Error />}
+    {uiModel.type === 'loading' && <Loading />}
+  </div>
 </BaseLayout>
 
 <script>
-  import { getCurrentLocation } from '../apis/LocationApi';
-  import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
-  import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
-
-  const locationStatus = document.getElementById('locationStatus');
-  const updateLocationStatus = async () => {
-    if (!locationStatus) return;
-    
-    try {
-      console.log('Getting location...');
-      locationStatus.textContent = 'Getting location...';
-      // Naver Throw Error: Fallback to default location
-      const data = await getCurrentLocation();
-
-      try {
-        console.log('Getting weather data...');
-        locationStatus.textContent = 'Getting weather data...';
-        const [weatherData, forecastData] = await Promise.all([
-          getCurrentWeather(data.latitude, data.longitude),
-          getForecast(data.latitude, data.longitude)
-        ]);
-        const topPageUIModel = convertToTopPageUIModel(weatherData, forecastData, data.city);
-
-        locationStatus.textContent = 'Success see console result';
-        console.log('topPageUIModel', topPageUIModel);
-      } catch (weatherError) {
-        console.error('Weather data fetch error:', weatherError);
-        locationStatus.textContent = `Current location: ${data.city} (Weather data unavailable)`;
-      }
-    } catch (error) {
-      console.error('Location fetch error:', error);
-      locationStatus.textContent = 'Unable to get location data. Please check your browser permissions and try again.';
-    }
-  };
-
-  document.addEventListener('DOMContentLoaded', () => {
-    updateLocationStatus();
-  });
+  import '../scripts/indexScript';
 </script>

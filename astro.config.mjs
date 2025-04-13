@@ -20,5 +20,11 @@ export default defineConfig({
     ssr: {
       noExternal: ['@astrojs/tailwind']
     }
+  },
+
+  output: 'server',
+  adapter: {
+    name: 'astro-default',
+    hooks: {}
   }
 }); 

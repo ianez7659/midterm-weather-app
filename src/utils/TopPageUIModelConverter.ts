@@ -71,6 +71,7 @@ export const convertToTopPageUIModel = (
   };
 
   return {
+    type: 'success',
     currentWeather,
     dailyForecast,
     hourlyForecast,

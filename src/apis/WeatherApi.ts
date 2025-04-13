@@ -1,6 +1,5 @@
 import { CurrentWeatherResponse } from '../responses/CurrentWeatherResponse';
 import { ForecastResponse } from '../responses/ForecastResponse';
-import { WEATHER_CODES } from '../constants/weatherCodes';
 
 const BASE_URL = 'https://api.open-meteo.com/v1';
 
@@ -15,8 +14,6 @@ export const getCurrentWeather = async (latitude: number, longitude: number): Pr
     }
 
     const data = await response.json();
-    console.log('Current Weather API Response:', data);
-
     return {
       current_weather: data.current_weather,
       relativehumidity_2m: data.hourly.relativehumidity_2m[0],

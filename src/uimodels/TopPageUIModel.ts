@@ -1,8 +1,16 @@
-export interface TopPageUIModel {
-  currentWeather: CurrentWeatherCardUIModel;
-  dailyForecast: DailyForecastSectionUIModel;
-  hourlyForecast: HourlyForecastSectionUIModel;
-} 
+export type TopPageUIModel = 
+  | {
+      type: 'success';
+      currentWeather: CurrentWeatherCardUIModel;
+      dailyForecast: DailyForecastSectionUIModel;
+      hourlyForecast: HourlyForecastSectionUIModel;
+    }
+  | {
+      type: 'failure';
+    }
+  | {
+      type: 'loading';
+    };
 
 export interface CurrentWeatherCardUIModel {
   location: string;

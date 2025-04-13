@@ -1,9 +1,9 @@
 import { LocationResponse } from '../responses/LocationResponse';
 
-export const DEFAULT_CITY = 'Vancouver';
+export const DEFAULT_CITY = 'Tokyo';
 export const DEFAULT_COORDS = {
-  latitude: 49.2827,
-  longitude: -123.1207
+  latitude: 35.681236,
+  longitude: 139.767125
 };
 
 export const getCurrentLocation = async (): Promise<LocationResponse> => {
@@ -31,8 +31,13 @@ export const getCurrentLocation = async (): Promise<LocationResponse> => {
           }
         },
         (error) => {
-          console.error('Failed to get location:', error.message);
+          console.log('Failed to get location:', error.message);
           resolve({ ...DEFAULT_COORDS, city: DEFAULT_CITY });
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
         }
       );
     } else {
