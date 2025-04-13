@@ -31,8 +31,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       try {
         console.log('Getting weather data...');
         locationStatus.textContent = 'Getting weather data...';
-        const weatherData = await getCurrentWeather(data.latitude, data.longitude);
-        const forecastData = await getForecast(data.latitude, data.longitude);
+        const [weatherData, forecastData] = await Promise.all([
+          getCurrentWeather(data.latitude, data.longitude),
+          getForecast(data.latitude, data.longitude)
+        ]);
         const topPageUIModel = convertToTopPageUIModel(weatherData, forecastData, data.city);
 
         locationStatus.textContent = 'Success see console result';
