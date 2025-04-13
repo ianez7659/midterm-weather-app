@@ -57,12 +57,17 @@ export const convertToTopPageUIModel = (
   };
 
   const hourlyForecast: HourlyForecastSectionUIModel = {
-    forecasts: forecastResponse.hourly.time.map((time, index) => ({
-      time,
-      temperature: forecastResponse.hourly.temperature[index],
-      humidity: forecastResponse.hourly.relativehumidity_2m[index],
-      weather: weatherCodeToWeather(forecastResponse.hourly.weathercode[index]),
-    })),
+    forecasts: forecastResponse.hourly.time
+      .map((time, index) => ({
+        time,
+        temperature: forecastResponse.hourly.temperature[index],
+        humidity: forecastResponse.hourly.relativehumidity_2m[index],
+        weather: weatherCodeToWeather(forecastResponse.hourly.weathercode[index]),
+      }))
+      // Filter 3 hourly forecast
+      .filter((_, index) => index % 3 === 0)
+      // Limit to 8 forecasts
+      .slice(0, 8)
   };
 
   return {
