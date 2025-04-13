@@ -14,19 +14,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  import { getCurrentLocation } from '../services/LocationService';
+  import { getCurrentLocation } from '../apis/LocationApi';
+  import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
 
   const locationStatus = document.getElementById('locationStatus');
   const updateLocationStatus = async () => {
     if (!locationStatus) return;
     
-    locationStatus.textContent = 'Getting location...';
+    try {
+      console.log('Getting location...');
+      locationStatus.textContent = 'Getting location...';
+      // Naver Throw Error: Fallback to default location
+      const data = await getCurrentLocation();
 
-    const data = await getCurrentLocation();
-    
-    locationStatus.textContent = `Current location: ${data.city}`;
-    
-    console.log('Using city:', data.city);
+      try {
+        console.log('Getting weather data...');
+        locationStatus.textContent = 'Getting weather data...';
+        const weatherData = await getCurrentWeather(data.latitude, data.longitude);
+        const forecastData = await getForecast(data.latitude, data.longitude);
+
+        locationStatus.textContent = `
+          Current location: ${data.city}
+          Weather: ${weatherData.current_weather.weather}
+          Forecast: ${forecastData.daily.weather}
+        `;
+        console.log('Using city:', data.city);
+        console.log('Weather data:', weatherData);
+        console.log('Forecast data:', forecastData);
+      } catch (weatherError) {
+        console.error('Weather data fetch error:', weatherError);
+        locationStatus.textContent = `Current location: ${data.city} (Weather data unavailable)`;
+      }
+    } catch (error) {
+      console.error('Location fetch error:', error);
+      locationStatus.textContent = 'Unable to get location data. Please check your browser permissions and try again.';
+    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {
