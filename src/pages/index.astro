@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import CurrentWeatherCard from '../components/CurrentWeatherCard.astro';
 import DailyForecastSection from '../components/DailyForecastSection.astro';
 import HourlyForecastSection from '../components/HourlyForecastSection.astro';
+import SearchCityInput from '../components/SearchCityInput.astro';
 import Error from '../components/Error.astro';
 import Loading from '../components/Loading.astro';
 import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
@@ -47,6 +48,7 @@ if (!lat || !lon || !city) {
   <div class="container mx-auto px-4 py-8">
     {uiModel.type === 'success' && (
       <>
+        <SearchCityInput />
         <CurrentWeatherCard model={uiModel.currentWeather} />
         <div class="mt-8">
           <DailyForecastSection model={uiModel.dailyForecast} />
