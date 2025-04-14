@@ -1,0 +1,24 @@
+
+<div class="relative">
+  <button
+    id="favoriteDropdownButton"
+    class="p-2 border rounded hover:bg-gray-100"
+  >
+    Favorite Cities
+  </button>
+  <div
+    id="favoriteDropdown"
+    class="absolute z-10 w-48 mt-1 bg-white border rounded shadow-lg hidden"
+  >
+    <div id="favoriteCitiesList" class="hidden">
+    </div>
+    <div id="noFavoritesMessage" class="p-2 text-gray-500">
+      No favorite cities
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initializeFavoriteCitiesDropdown } from '../scripts/favoriteCitiesDropdownScript';
+  initializeFavoriteCitiesDropdown();
+</script> 

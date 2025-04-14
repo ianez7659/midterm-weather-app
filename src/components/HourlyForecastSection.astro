@@ -1,0 +1,21 @@
+---
+import { HourlyForecastSectionUIModel } from '../uimodels/TopPageUIModel';
+
+interface Props {
+  model: HourlyForecastSectionUIModel;
+}
+
+const { model } = Astro.props;
+---
+
+<div>
+  <h2 class="text-2xl font-bold">Hourly Forecast</h2>
+  {model.forecasts.map((forecast) => (
+    <div>
+      <p>Time: {forecast.time}</p>
+      <p>Temperature: {forecast.temperature}°C</p>
+      <p>Weather: {forecast.weather}</p>
+      <p>Humidity: {forecast.humidity}%</p>
+    </div>
+  ))}
+</div> 

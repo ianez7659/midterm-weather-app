@@ -1,11 +1,76 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CurrentWeatherCard from '../components/CurrentWeatherCard.astro';
+import DailyForecastSection from '../components/DailyForecastSection.astro';
+import HourlyForecastSection from '../components/HourlyForecastSection.astro';
+import SearchCityInput from '../components/SearchCityInput.astro';
+import FavoriteCitiesDropdown from '../components/FavoriteCitiesDropdown.astro';
+import Error from '../components/Error.astro';
+import Loading from '../components/Loading.astro';
+import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
+import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
+import { TopPageUIModel } from '../uimodels/TopPageUIModel';
+
+// Get location from URL parameters
+const searchParams = Astro.url.searchParams;
+const lat = searchParams.get('lat');
+const lon = searchParams.get('lon');
+const city = searchParams.get('city');
+
+let uiModel: TopPageUIModel;
+
+// Determine location
+if (!lat || !lon || !city) {
+  uiModel = { type: 'loading' };
+} else {
+  const location = {
+    latitude: parseFloat(lat),
+    longitude: parseFloat(lon),
+    city
+  };
+
+  console.log("Server side - Determined location:", location);
+
+  try {
+    // Get weather data in parallel
+    const [currentWeather, forecast] = await Promise.all([
+      getCurrentWeather(location.latitude, location.longitude),
+      getForecast(location.latitude, location.longitude)
+    ]);
+    uiModel = convertToTopPageUIModel(
+      currentWeather,
+      forecast,
+      location
+    );
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    uiModel = { type: 'failure' };
+  }
+}
 ---
 
 <BaseLayout>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="p-6 bg-white rounded-lg shadow-lg">
-      <h1 class="text-2xl font-bold text-red-800">Test TailwindCSS</h1>
-    </div>
+  <div class="container mx-auto px-4 py-8">
+    {uiModel.type === 'success' && (
+      <>
+        <div class="flex justify-between items-center mb-4">
+          <SearchCityInput />
+          <FavoriteCitiesDropdown />
+        </div>
+        <CurrentWeatherCard model={uiModel.currentWeather} />
+        <div class="mt-8">
+          <DailyForecastSection model={uiModel.dailyForecast} />
+        </div>
+        <div class="mt-8">
+          <HourlyForecastSection model={uiModel.hourlyForecast} />
+        </div>
+      </>
+    )}
+    {uiModel.type === 'failure' && <Error />}
+    {uiModel.type === 'loading' && <Loading />}
   </div>
 </BaseLayout>
+
+<script>
+  import '../scripts/indexScript';
+</script>

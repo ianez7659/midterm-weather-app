@@ -1,0 +1,15 @@
+<div class="relative">
+  <input
+    type="text"
+    id="citySearch"
+    class="w-full p-2 border rounded"
+    placeholder="Input city name"
+  />
+
+  <div id="searchResults" class="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg hidden"></div>
+</div>
+
+<script>
+  import { initializeSearchCity } from '../scripts/searchCityScript';
+  initializeSearchCity();
+</script>

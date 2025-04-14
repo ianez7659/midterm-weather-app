@@ -14,5 +14,17 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true
+  },
+
+  vite: {
+    ssr: {
+      noExternal: ['@astrojs/tailwind']
+    }
+  },
+
+  output: 'server',
+  adapter: {
+    name: 'astro-default',
+    hooks: {}
   }
 }); 

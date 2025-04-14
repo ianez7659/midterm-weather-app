@@ -1,0 +1,12 @@
+---
+interface Props {
+  message?: string;
+}
+
+const { message = "Failed to get weather information. Please try again later." } = Astro.props;
+---
+
+<div class="text-center py-8">
+  <h2 class="text-2xl font-bold text-red-600">Error</h2>
+  <p class="mt-4">{message}</p>
+</div> 
