@@ -12,6 +12,12 @@ export type TopPageUIModel =
       type: 'loading';
     };
 
+export interface FavoriteButtonUIModel {
+  cityName: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface CurrentWeatherCardUIModel {
   location: string;
   temperature: number;
@@ -20,6 +26,7 @@ export interface CurrentWeatherCardUIModel {
   windSpeed: number;
   windDirection: number;
   weather: string;
+  favoriteButton: FavoriteButtonUIModel;
 } 
 
 export interface DailyForecastSectionUIModel {

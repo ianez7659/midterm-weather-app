@@ -4,6 +4,7 @@ import CurrentWeatherCard from '../components/CurrentWeatherCard.astro';
 import DailyForecastSection from '../components/DailyForecastSection.astro';
 import HourlyForecastSection from '../components/HourlyForecastSection.astro';
 import SearchCityInput from '../components/SearchCityInput.astro';
+import FavoriteCitiesDropdown from '../components/FavoriteCitiesDropdown.astro';
 import Error from '../components/Error.astro';
 import Loading from '../components/Loading.astro';
 import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
@@ -36,7 +37,11 @@ if (!lat || !lon || !city) {
       getCurrentWeather(location.latitude, location.longitude),
       getForecast(location.latitude, location.longitude)
     ]);
-    uiModel = convertToTopPageUIModel(currentWeather, forecast, location.city);
+    uiModel = convertToTopPageUIModel(
+      currentWeather,
+      forecast,
+      location
+    );
   } catch (error) {
     console.error("Error fetching weather data:", error);
     uiModel = { type: 'failure' };
@@ -48,7 +53,10 @@ if (!lat || !lon || !city) {
   <div class="container mx-auto px-4 py-8">
     {uiModel.type === 'success' && (
       <>
-        <SearchCityInput />
+        <div class="flex justify-between items-center mb-4">
+          <SearchCityInput />
+          <FavoriteCitiesDropdown />
+        </div>
         <CurrentWeatherCard model={uiModel.currentWeather} />
         <div class="mt-8">
           <DailyForecastSection model={uiModel.dailyForecast} />

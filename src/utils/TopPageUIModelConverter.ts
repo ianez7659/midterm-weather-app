@@ -1,6 +1,7 @@
 import { TopPageUIModel, CurrentWeatherCardUIModel, DailyForecastSectionUIModel, HourlyForecastSectionUIModel } from '../uimodels/TopPageUIModel';
 import { CurrentWeatherResponse } from '../responses/CurrentWeatherResponse';
 import { ForecastResponse } from '../responses/ForecastResponse';
+import { LocationResponse } from '../responses/LocationResponse';
 
 const weatherCodeToWeather = (code: number): string => {
   const weatherMap: { [key: number]: string } = {
@@ -35,16 +36,21 @@ const weatherCodeToWeather = (code: number): string => {
 export const convertToTopPageUIModel = (
   currentWeatherResponse: CurrentWeatherResponse,
   forecastResponse: ForecastResponse,
-  location: string
+  location: LocationResponse
 ): TopPageUIModel => {
   const currentWeather: CurrentWeatherCardUIModel = {
-    location,
+    location: location.city,
     temperature: currentWeatherResponse.current_weather.temperature,
     humidity: currentWeatherResponse.relativehumidity_2m,
     pressure: currentWeatherResponse.surface_pressure,
     windSpeed: currentWeatherResponse.current_weather.windspeed,
     windDirection: currentWeatherResponse.current_weather.winddirection,
     weather: weatherCodeToWeather(currentWeatherResponse.current_weather.weathercode),
+    favoriteButton: {
+      cityName: location.city,
+      latitude: location.latitude,
+      longitude: location.longitude
+    }
   };
 
   const dailyForecast: DailyForecastSectionUIModel = {

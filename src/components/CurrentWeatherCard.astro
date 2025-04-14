@@ -1,5 +1,6 @@
 ---
 import { CurrentWeatherCardUIModel } from '../uimodels/TopPageUIModel';
+import FavoriteButton from './FavoriteButton.astro';
 
 interface Props {
   model: CurrentWeatherCardUIModel;
@@ -9,10 +10,22 @@ const { model } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-2xl font-bold">Current Weather</h2>
-  <p>City: {model.location}</p>
-  <p>Temperature: {model.temperature}°C</p>
-  <p>Weather: {model.weather}</p>
-  <p>Humidity: {model.humidity}%</p>
-  <p>Wind Speed: {model.windSpeed}m/s</p>
+  <div>
+    <h2 class="text-2xl font-bold">Current Weather</h2>
+    <h2>{model.location}</h2>
+    <FavoriteButton model={model.favoriteButton} />
+  </div>
+  <div>
+    <p>{"temperature:" + model.temperature}°C</p>
+    
+    <p>{"weather:" + model.weather}</p>
+  </div>
+  <div>
+    <div>
+      <p>{"humidity:" + model.humidity}%</p>
+    </div>
+    <div>
+      <p>{"pressure:" + model.pressure}hPa</p>
+    </div>
+  </div>
 </div> 
