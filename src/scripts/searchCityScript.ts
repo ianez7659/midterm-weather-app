@@ -12,7 +12,7 @@ export const initializeSearchCity = () => {
     const target = e.target as HTMLInputElement;
     const query = target.value;
 
-    // デバウンス処理
+    // Debounce the input
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
       if (query.length < 2) {
@@ -47,7 +47,7 @@ export const initializeSearchCity = () => {
     }, 300);
   });
 
-  // 入力フィールド外をクリックしたときに結果を非表示にする
+  // When clicking outside the input field, hide the results
   document.addEventListener('click', (e) => {
     const target = e.target as Node;
     if (!input.contains(target) && !results.contains(target)) {
