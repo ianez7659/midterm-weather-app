@@ -8,24 +8,52 @@ interface Props {
 
 const { model } = Astro.props;
 ---
+<!-- <h2 class="text-2xl sm:text-3xl font-semibold mb-4  text-gray-800">Current Weather</h2>
 
-<div>
-  <div>
-    <h2 class="text-2xl font-bold">Current Weather</h2>
-    <h2>{model.location}</h2>
+<div class="bg-white shadow-lg rounded-2xl p-4 sm:p-6 w-full mx-auto text-gray-800">
+  <div class="flex flex-row justify-between items-center gap-4 mb-6">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center sm:text-left">{model.location}</h2>
     <FavoriteButton model={model.favoriteButton} />
   </div>
-  <div>
-    <p>{"temperature:" + model.temperature}°C</p>
-    
-    <p>{"weather:" + model.weather}</p>
-  </div>
-  <div>
-    <div>
-      <p>{"humidity:" + model.humidity}%</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-base sm:text-lg">
+    <div class="flex flex-col">
+      <span class="text-gray-500">Temperature</span>
+      <span class="font-medium">{model.temperature}°C</span>
     </div>
-    <div>
-      <p>{"pressure:" + model.pressure}hPa</p>
+
+    <div class="flex flex-col">
+      <span class="text-gray-500">Weather</span>
+      <span class="font-medium">{model.weather}</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="text-gray-500">Humidity</span>
+      <span class="font-medium">{model.humidity}%</span>
+    </div>
+
+    <div class="flex flex-col">
+      <span class="text-gray-500">Pressure</span>
+      <span class="font-medium">{model.pressure} hPa</span>
     </div>
   </div>
-</div> 
+</div> -->
+
+<div class="flex items-center justify-start gap-8 max-w-xl sm:gap-12 text-black">
+  <!-- Temperature -->
+  <div class="text-[6rem] sm:text-[8rem] font-light leading-none">
+    {model.temperature}°
+  </div>
+
+  <!-- Right Side -->
+  <div class="flex flex-col gap-2 sm:gap-3 text-lg sm:text-xl text-black/90">
+    <div class="flex items-center gap-3 text-2xl sm:text-3xl font-medium">
+      <span>{model.location}</span>
+      <span>❄️</span>
+      <FavoriteButton model={model.favoriteButton} />
+    </div>
+    <!-- <p class="text-sm sm:text-base">{model.dateTime}</p> -->
+    <p>Humidity: <span class="text-black font-medium">{model.humidity}%</span></p>
+    <p>Pressure: <span class="text-black font-medium">{model.pressure} hPa</span></p>
+  </div>
+</div>
