@@ -9,7 +9,7 @@ const { model } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-2xl font-bold">Hourly Forecast</h2>
+  <h2 class="text-2xl px-0 font-bold">Hourly Forecast</h2>
   {model.forecasts.map((forecast) => (
     <div>
       <p>Time: {forecast.time}</p>
