@@ -50,7 +50,7 @@ if (!lat || !lon || !city) {
 ---
 
 <BaseLayout>
-  <div class="container mx-auto px-4 py-8">
+  <!-- <div class="container mx-auto px-4 py-8">
     {uiModel.type === 'success' && (
       <>
         <div class="flex justify-between items-center mb-4">
@@ -68,7 +68,35 @@ if (!lat || !lon || !city) {
     )}
     {uiModel.type === 'failure' && <Error />}
     {uiModel.type === 'loading' && <Loading />}
+  </div> -->
+
+  {uiModel.type === 'success' && (
+  <div class="relative h-screen w-screen overflow-hidden">
+  
+  <div class="absolute inset-0 bg-[url('/bg-weather.png')] bg-cover bg-center z-0" />
+  
+  <div class="relative z-10 grid grid-cols-1 lg:grid-cols-[60%_40%] h-full w-full">
+    
+    <div class="flex items-center justify-center px-6 py-10">
+      <CurrentWeatherCard model={uiModel.currentWeather} />
+    </div>
+    
+    <div class="glass p-6 lg:p-10 overflow-y-auto">
+      <div class="space-y-8">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-4 border-b border-white/20 pb-4">
+          <FavoriteCitiesDropdown />
+          <SearchCityInput />
+        </div>
+        <DailyForecastSection model={uiModel.dailyForecast} />
+        <HourlyForecastSection model={uiModel.hourlyForecast} />
+      </div>
+    </div>
   </div>
+</div>
+)}
+
+{uiModel.type === 'failure' && <Error />}
+{uiModel.type === 'loading' && <Loading />}
 </BaseLayout>
 
 <script>
