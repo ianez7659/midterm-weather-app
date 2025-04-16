@@ -73,8 +73,10 @@ if (!lat || !lon || !city) {
   {uiModel.type === 'success' && (
   <div class="relative h-screen w-screen overflow-hidden">
   
-  <div class="absolute inset-0 bg-[url('/bg-weather.png')] bg-cover bg-center z-0" />
-  
+  <div
+  class="absolute inset-0 bg-cover bg-center z-0"
+  style={{ backgroundImage: `url(${uiModel.backgroundImage.imagePath})` }}
+ />
   <div class="relative z-10 grid grid-cols-1 lg:grid-cols-[60%_40%] h-full w-full">
     
     <div class="flex items-center justify-center px-6 py-10">
