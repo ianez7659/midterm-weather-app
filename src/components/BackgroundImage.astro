@@ -1,0 +1,14 @@
+---
+import { BackgroundImageUIModel } from '../uimodels/TopPageUIModel';
+
+interface Props {
+  model: BackgroundImageUIModel;
+}
+
+const { model } = Astro.props;
+---
+<div
+  class="absolute inset-0 bg-cover bg-center z-0"
+  style={{ backgroundImage: `url(${model.imagePath})` }}
+ />
+

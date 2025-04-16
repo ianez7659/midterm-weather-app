@@ -4,6 +4,7 @@ export type TopPageUIModel =
       currentWeather: CurrentWeatherCardUIModel;
       dailyForecast: DailyForecastSectionUIModel;
       hourlyForecast: HourlyForecastSectionUIModel;
+      backgroundImage: BackgroundImageUIModel;
     }
   | {
       type: "failure";
@@ -45,4 +46,8 @@ export interface HourlyForecastSectionUIModel {
     humidity: number;
     weather: string;
   }>;
+}
+
+export interface BackgroundImageUIModel {
+  imagePath: string;
 }
