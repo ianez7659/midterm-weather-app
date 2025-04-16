@@ -3,6 +3,7 @@ import {
   CurrentWeatherCardUIModel,
   DailyForecastSectionUIModel,
   HourlyForecastSectionUIModel,
+  BackgroundImageUIModel,
 } from "../uimodels/TopPageUIModel";
 import { CurrentWeatherResponse } from "../responses/CurrentWeatherResponse";
 import { ForecastResponse } from "../responses/ForecastResponse";
@@ -121,10 +122,17 @@ export const convertToTopPageUIModel = (
       .slice(0, 8),
   };
 
+  const backgroundImage: BackgroundImageUIModel = {
+    imagePath: weatherCodeToBackgroundImage(
+      currentWeatherResponse.current_weather.weathercode
+    ),
+  };
+
   return {
     type: "success",
     currentWeather,
     dailyForecast,
     hourlyForecast,
+    backgroundImage,
   };
 };
