@@ -1,5 +1,6 @@
 ---
 import { HourlyForecastSectionUIModel } from '../uimodels/TopPageUIModel';
+import ThermometerIcon from '../assets/icons/thermometer-natural.svg';
 
 interface Props {
   model: HourlyForecastSectionUIModel;
@@ -9,13 +10,14 @@ const { model } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-2xl px-0 font-bold">Hourly Forecast</h2>
+  <h2 class="text-2xl px-0 font-bold text-white mb-4 text-center">Hourly Forecast</h2>
+  <div class="space-y-8 text-white text-center text-sm">
   {model.forecasts.map((forecast) => (
-    <div>
-      <p>Time: {forecast.time}</p>
-      <p>Temperature: {forecast.temperature}°C</p>
-      <p>Weather: {forecast.weather}</p>
-      <p>Humidity: {forecast.humidity}%</p>
+    <div class="flex items-center justify-center flex-row gap-x-12">
+      <p class="w-20 text-right text-sm"> {forecast.time}</p>
+      <p class="w-12 text-center">{forecast.temperature}°C</p>
+      <img src ="src/assets/icons/thermometer-natural.svg" alt="Thermometer icon" />
+      <p class="w-20 text-left">{forecast.weather}</p>
     </div>
   ))}
 </div> 

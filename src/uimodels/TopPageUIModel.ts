@@ -1,15 +1,15 @@
-export type TopPageUIModel = 
+export type TopPageUIModel =
   | {
-      type: 'success';
+      type: "success";
       currentWeather: CurrentWeatherCardUIModel;
       dailyForecast: DailyForecastSectionUIModel;
       hourlyForecast: HourlyForecastSectionUIModel;
     }
   | {
-      type: 'failure';
+      type: "failure";
     }
   | {
-      type: 'loading';
+      type: "loading";
     };
 
 export interface FavoriteButtonUIModel {
@@ -27,7 +27,7 @@ export interface CurrentWeatherCardUIModel {
   windDirection: number;
   weather: string;
   favoriteButton: FavoriteButtonUIModel;
-} 
+}
 
 export interface DailyForecastSectionUIModel {
   forecasts: Array<{
@@ -36,7 +36,7 @@ export interface DailyForecastSectionUIModel {
     minTemp: number;
     maxTemp: number;
   }>;
-} 
+}
 
 export interface HourlyForecastSectionUIModel {
   forecasts: Array<{
@@ -45,4 +45,4 @@ export interface HourlyForecastSectionUIModel {
     humidity: number;
     weather: string;
   }>;
-} 
+}
