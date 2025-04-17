@@ -10,8 +10,6 @@ import Loading from '../components/Loading.astro';
 import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
 import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
 import { TopPageUIModel } from '../uimodels/TopPageUIModel';
-import BackgroundImage from '../components/BackgroundImage.astro';
-
 
 // Get location from URL parameters
 const searchParams = Astro.url.searchParams;
@@ -51,8 +49,8 @@ if (!lat || !lon || !city) {
 }
 ---
 
-<BaseLayout>
-  <!-- <div class="container mx-auto px-4 py-8">
+<!-- <BaseLayout>
+  <div class="container mx-auto px-4 py-8">
     {uiModel.type === 'success' && (
       <>
         <div class="flex justify-between items-center mb-4">
@@ -70,15 +68,18 @@ if (!lat || !lon || !city) {
     )}
     {uiModel.type === 'failure' && <Error />}
     {uiModel.type === 'loading' && <Loading />}
-  </div> -->
+  </div>
+</BaseLayout> -->
 
-  {uiModel.type === 'success' && (
+{uiModel.type === 'success' && (
   <div class="relative h-screen w-screen overflow-hidden">
   
+  <div class="absolute inset-0 bg-[url('/bg-weather.png')] bg-cover bg-center z-0" />
+  
   <div class="relative z-10 grid grid-cols-1 lg:grid-cols-[60%_40%] h-full w-full">
-    <BackgroundImage model={uiModel.backgroundImage}/>
-    <div class="flex items-center justify-center px-6 py-10">
-      <CurrentWeatherCard model={uiModel.currentWeather} />
+    
+    <div class="relative z-10 h-full flex flex-col justify-center lg:justify-end px-6 pt-10 pb-16 lg:pb-12">
+    <CurrentWeatherCard model={uiModel.currentWeather} />
     </div>
     
     <div class="glass p-6 lg:p-10 overflow-y-auto">

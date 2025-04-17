@@ -8,52 +8,37 @@ interface Props {
 
 const { model } = Astro.props;
 ---
-<!-- <h2 class="text-2xl sm:text-3xl font-semibold mb-4  text-gray-800">Current Weather</h2>
 
-<div class="bg-white shadow-lg rounded-2xl p-4 sm:p-6 w-full mx-auto text-gray-800">
-  <div class="flex flex-row justify-between items-center gap-4 mb-6">
-    <h2 class="text-3xl sm:text-4xl font-bold text-center sm:text-left">{model.location}</h2>
-    <FavoriteButton model={model.favoriteButton} />
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-base sm:text-lg">
-    <div class="flex flex-col">
-      <span class="text-gray-500">Temperature</span>
-      <span class="font-medium">{model.temperature}°C</span>
+<div class="w-full max-w-xl mx-auto font-sans text-white px-4 sm:px-0">  
+  <div class="flex flex-row items-start justify-center sm:justify-start gap-1 sm:gap-12 w-full">
+    
+    <!-- Temperature -->
+    <div class="text-[6rem] sm:text-[10rem] font-light leading-none w-[150px] text-center">
+      {Math.floor(model.temperature)}°
     </div>
 
-    <div class="flex flex-col">
-      <span class="text-gray-500">Weather</span>
-      <span class="font-medium">{model.weather}</span>
-    </div>
+    <!-- Right Side Info -->
+    <div class="flex flex-col py-1 w-full">
+      
+      <!-- Location + Emoji + Favorite -->
+      <div class="flex items-center justify-center sm:justify-start gap-0 pt-5 sm:pt-10 text-[2rem] sm:text-[3.5rem] font-light">
+        <span>{model.location}</span>
+        <span>❄️</span>
+        <div class="">
+          <FavoriteButton model={model.favoriteButton} />
+        </div>
+        
+      </div>
 
-    <div class="flex flex-col">
-      <span class="text-gray-500">Humidity</span>
-      <span class="font-medium">{model.humidity}%</span>
-    </div>
+      <!-- Date -->
+      <p class="text-[14px] sm:text-base py-0 sm:gap-0">Date Here</p> 
 
-    <div class="flex flex-col">
-      <span class="text-gray-500">Pressure</span>
-      <span class="font-medium">{model.pressure} hPa</span>
-    </div>
-  </div>
-</div> -->
+      <!-- Hidden on mobile -->
+      <div class="hidden sm:flex flex-col gap-1 text-base">
+        <p>Humidity: <span class="font-medium">{model.humidity}%</span></p>
+        <p>Pressure: <span class="font-medium">{model.pressure} hPa</span></p>
+      </div>
 
-<div class="flex items-center justify-start gap-8 max-w-xl sm:gap-12 text-black">
-  <!-- Temperature -->
-  <div class="text-[6rem] sm:text-[8rem] font-light leading-none">
-    {model.temperature}°
-  </div>
-
-  <!-- Right Side -->
-  <div class="flex flex-col gap-2 sm:gap-3 text-lg sm:text-xl text-black/90">
-    <div class="flex items-center gap-3 text-2xl sm:text-3xl font-medium">
-      <span>{model.location}</span>
-      <span>❄️</span>
-      <FavoriteButton model={model.favoriteButton} />
     </div>
-    <!-- <p class="text-sm sm:text-base">{model.dateTime}</p> -->
-    <p>Humidity: <span class="text-black font-medium">{model.humidity}%</span></p>
-    <p>Pressure: <span class="text-black font-medium">{model.pressure} hPa</span></p>
   </div>
 </div>
