@@ -45,6 +45,7 @@ export interface HourlyForecastSectionUIModel {
     temperature: number;
     humidity: number;
     weather: string;
+    weatherIconImagePath: string;
   }>;
 }
 
