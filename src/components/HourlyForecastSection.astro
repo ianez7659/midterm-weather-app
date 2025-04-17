@@ -17,7 +17,7 @@ const { model } = Astro.props;
       <p class="w-20 text-right text-sm"> {forecast.time}</p>
       <p class="w-12 text-center">{forecast.temperature}°C</p>
       <img src ="src/assets/icons/thermometer-natural.svg" alt="Thermometer icon" />
-      <p class="w-20 text-left">{forecast.weather}</p>
+      <img src={forecast.weatherIconImagePath} alt={forecast.weather} class="w-10 h-10" />
     </div>
   ))}
 </div> 

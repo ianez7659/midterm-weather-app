@@ -49,28 +49,7 @@ if (!lat || !lon || !city) {
 }
 ---
 
-<!-- <BaseLayout>
-  <div class="container mx-auto px-4 py-8">
-    {uiModel.type === 'success' && (
-      <>
-        <div class="flex justify-between items-center mb-4">
-          <SearchCityInput />
-          <FavoriteCitiesDropdown />
-        </div>
-        <CurrentWeatherCard model={uiModel.currentWeather} />
-        <div class="mt-8">
-          <DailyForecastSection model={uiModel.dailyForecast} />
-        </div>
-        <div class="mt-8">
-          <HourlyForecastSection model={uiModel.hourlyForecast} />
-        </div>
-      </>
-    )}
-    {uiModel.type === 'failure' && <Error />}
-    {uiModel.type === 'loading' && <Loading />}
-  </div>
-</BaseLayout> -->
-
+<BaseLayout>
 {uiModel.type === 'success' && (
   <div class="relative h-screen w-screen overflow-hidden">
     <BackgroundImage model={uiModel.backgroundImage} />
