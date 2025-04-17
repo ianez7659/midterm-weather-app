@@ -9,6 +9,7 @@ import { CurrentWeatherResponse } from "../responses/CurrentWeatherResponse";
 import { ForecastResponse } from "../responses/ForecastResponse";
 import { LocationResponse } from "../responses/LocationResponse";
 import { extractTimeOnly } from "../utils/TimeUtils";
+import { escape } from "querystring";
 
 const bgSunnyImagePath = "src/assets/backgroundimages/bg-sunny.png";
 const bgCloudyImagePath = "src/assets/backgroundimages/bg-cloudy.png";
@@ -49,11 +50,11 @@ const weatherCodeToWeather = (code: number): string => {
   const weatherMap: { [key: number]: string } = {
     0: "Clear",
     1: "Mainly Clear",
+    2: "Partly Cloudy",
     3: "Overcast",
     45: "Fog",
     48: "Depositing Rime Fog",
     51: "Light Drizzle",
-    2: "Partly Cloudy",
     53: "Moderate Drizzle",
     55: "Dense Drizzle",
     61: "Slight Rain",
@@ -73,6 +74,44 @@ const weatherCodeToWeather = (code: number): string => {
     99: "Thunderstorm with Heavy Hail",
   };
   return weatherMap[code] || "Unknown";
+};
+
+const iconCloudyImagePath = "src/assets/icons/weather-cloudy.svg";
+const iconFogImagePath = "src/assets/icons/weather-fog.svg";
+const iconPartlyCloudyImagePath = "src/assets/icons/weather-partly cloudy.svg";
+const iconRainImagePath = "src/assets/icons/weather-rain.svg";
+const iconSnowImagePath = "src/assets/icons/weather-snow.svg";
+const iconSunnyImagePath = "src/assets/icons/weather-sunny.svg";
+const iconThunderstormImagePath = "src/assets/icons/weather-thunderstorm.svg";
+
+const weatherCodeToIconImage = (code: number): string => {
+  const weatherMap: { [key: number]: string } = {
+    0: iconSunnyImagePath,
+    1: iconSunnyImagePath,
+    2: iconPartlyCloudyImagePath,
+    3: iconCloudyImagePath,
+    45: iconFogImagePath,
+    48: iconFogImagePath,
+    51: iconRainImagePath,
+    53: iconRainImagePath,
+    55: iconRainImagePath,
+    61: iconRainImagePath,
+    63: iconRainImagePath,
+    65: iconRainImagePath,
+    71: iconSnowImagePath,
+    73: iconSnowImagePath,
+    75: iconSnowImagePath,
+    77: iconSnowImagePath,
+    80: iconRainImagePath,
+    81: iconRainImagePath,
+    82: iconRainImagePath,
+    85: iconSnowImagePath,
+    86: iconSnowImagePath,
+    95: iconThunderstormImagePath,
+    96: iconThunderstormImagePath,
+    99: iconThunderstormImagePath,
+  };
+  return weatherMap[code] || iconSunnyImagePath;
 };
 
 export const convertToTopPageUIModel = (
@@ -113,6 +152,9 @@ export const convertToTopPageUIModel = (
         temperature: forecastResponse.hourly.temperature[index],
         humidity: forecastResponse.hourly.relativehumidity_2m[index],
         weather: weatherCodeToWeather(
+          forecastResponse.hourly.weathercode[index]
+        ),
+        weatherIconImagePath: weatherCodeToIconImage(
           forecastResponse.hourly.weathercode[index]
         ),
       }))
