@@ -10,7 +10,7 @@ import Loading from '../components/Loading.astro';
 import { convertToTopPageUIModel } from '../utils/TopPageUIModelConverter';
 import { getCurrentWeather, getForecast } from '../apis/WeatherApi';
 import { TopPageUIModel } from '../uimodels/TopPageUIModel';
-
+import BackgroundImage from '../components/BackgroundImage.astro';
 // Get location from URL parameters
 const searchParams = Astro.url.searchParams;
 const lat = searchParams.get('lat');
@@ -73,8 +73,7 @@ if (!lat || !lon || !city) {
 
 {uiModel.type === 'success' && (
   <div class="relative h-screen w-screen overflow-hidden">
-  
-  <div class="absolute inset-0 bg-[url('/bg-weather.png')] bg-cover bg-center z-0" />
+    <BackgroundImage model={uiModel.backgroundImage} />
   
   <div class="relative z-10 grid grid-cols-1 lg:grid-cols-[60%_40%] h-full w-full">
     
