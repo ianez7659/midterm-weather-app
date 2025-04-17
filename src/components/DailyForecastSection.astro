@@ -9,13 +9,15 @@ const { model } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-2xl font-bold">Daily Forecast</h2>
+  <h2 class="text-2xl font-bold text-black">Daily Forecast</h2>
   {model.forecasts.map((forecast) => (
-    <div>
-      <p>Date: {forecast.date}</p>
-      <p>Max Temperature: {forecast.maxTemp}°C</p>
-      <p>Min Temperature: {forecast.minTemp}°C</p>
-      <p>Weather: {forecast.weather}</p>
+    <div class="space-y-4 m-4">
+      <div class="flex gap-3">
+        <p class="">Date: {forecast.date}</p>
+        <p>{forecast.maxTemp}°C </p>
+        <p>{forecast.minTemp}°C vector</p>
+        <p>{forecast.weather}</p>
+      </div>
     </div>
   ))}
 </div> 
