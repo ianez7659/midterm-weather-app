@@ -142,6 +142,9 @@ export const convertToTopPageUIModel = (
       weather: weatherCodeToWeather(forecastResponse.daily.weathercode[index]),
       minTemp: forecastResponse.daily.temperature_min[index],
       maxTemp: forecastResponse.daily.temperature_max[index],
+      weatherIconImagePath: weatherCodeToIconImage(
+        forecastResponse.daily.weathercode[index]
+      ),
     })),
   };
 
