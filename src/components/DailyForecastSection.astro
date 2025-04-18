@@ -16,7 +16,7 @@ const { model } = Astro.props;
         <p class="">Date: {forecast.date}</p>
         <p>{forecast.maxTemp}°C </p>
         <p>{forecast.minTemp}°C vector</p>
-        <p>{forecast.weather}</p>
+        <img src={forecast.weatherIconImagePath} alt={forecast.weather} class="w-10 h-10" />
       </div>
     </div>
   ))}

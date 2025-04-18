@@ -36,6 +36,7 @@ export interface DailyForecastSectionUIModel {
     weather: string;
     minTemp: number;
     maxTemp: number;
+    weatherIconImagePath: string;
   }>;
 }
 
