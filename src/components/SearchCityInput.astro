@@ -1,13 +1,27 @@
-<div class="relative">
-  <input
-    type="text"
-    id="citySearch"
-    class="w-full p-2 border rounded"
-    placeholder="Input city name"
-  />
+<div class="relative w-full max-w-md flex flex-col">
 
-  <div id="searchResults" class="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg hidden"></div>
+  <div class="relative">
+    <input
+      id="citySearch"
+      type="text"
+      placeholder="Input city name"
+      class="bg-transparent border-b border-white placeholder-white text-white focus:outline-none pr-8 w-full"
+    />
+    <img
+      src="./src/assets/icons/fa_search.svg"
+      alt="search icon"
+      class="absolute right-2 bottom-2 w-4 h-4"
+    />
+  </div>
+
+  <div
+    id="searchResults"
+    class="mt-2 text-white space-y-1 select-none"
+  >
+
+  </div>
 </div>
+
 
 <script>
   import { initializeSearchCity } from '../scripts/searchCityScript';

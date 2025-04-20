@@ -27,7 +27,7 @@ export const initializeSearchCity = () => {
 
         response.items.forEach((item) => {
           const div = document.createElement('div');
-          div.className = 'p-2 hover:bg-gray-100 cursor-pointer';
+          div.className = 'p-2 hover:bg-gray-100 hover:text-black cursor-pointer';
           div.textContent = item.name;
           
           div.addEventListener('click', () => {
