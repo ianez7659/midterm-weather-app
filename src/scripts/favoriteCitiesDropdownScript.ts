@@ -15,7 +15,7 @@ export function initializeFavoriteCitiesDropdown() {
       citiesList.innerHTML = favorites.cities.map((city: FavoriteCity) => `
         <a
           href="?lat=${city.latitude}&lon=${city.longitude}&city=${encodeURIComponent(city.name)}"
-          class="block p-2 hover:bg-gray-100"
+          class="block p-2 hover:bg-gray-100 hover:text-black"
         >
           ${city.name}
         </a>

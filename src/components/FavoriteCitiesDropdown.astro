@@ -2,21 +2,22 @@
 <div class="relative">
   <button
     id="favoriteDropdownButton"
-    class="p-2 border rounded hover:bg-gray-100"
+    class="hover:bg-gray-100 hover:text-black bg-transparent border-b border-white placeholder-white text-white focus:outline-none"
   >
     Favorite Cities
   </button>
   <div
     id="favoriteDropdown"
-    class="absolute z-10 w-48 mt-1 bg-white border rounded shadow-lg hidden"
+    class="bg-transparent  border-white placeholder-white text-white focus:outline-none"
   >
     <div id="favoriteCitiesList" class="hidden">
     </div>
-    <div id="noFavoritesMessage" class="p-2 text-gray-500">
+    <div id="noFavoritesMessage" class="p-2 text-white">
       No favorite cities
     </div>
   </div>
 </div>
+
 
 <script>
   import { initializeFavoriteCitiesDropdown } from '../scripts/favoriteCitiesDropdownScript';
