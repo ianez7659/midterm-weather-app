@@ -13,25 +13,37 @@ const { model } = Astro.props;
   <div class="flex flex-row items-start justify-center sm:justify-start gap-1 sm:gap-12 w-full">
     
     <!-- Temperature -->
-    <div class="text-[6rem] sm:text-[10rem] font-light leading-none w-[150px] text-center">
-      {Math.floor(model.temperature)}°
+    <div class="flex items-center justify-center sm:items-start sm:justify-start h-full">
+      <div class="text-[6rem] sm:text-[10rem] font-light leading-none w-[150px] text-center">
+        {Math.floor(model.temperature)}°
+      </div>
     </div>
 
     <!-- Right Side Info -->
     <div class="flex flex-col py-1 w-full">
-      
-      <!-- Location + Emoji + Favorite -->
+
       <div class="flex items-center justify-center sm:justify-start gap-0 pt-5 sm:pt-10 text-[2rem] sm:text-[3.5rem] font-light">
         <span>{model.location}</span>
-        <span>❄️</span>
-        <div class="">
+        <!-- <span>❄️</span> -->
+        <img 
+        src={model.weatherIconImagePath} 
+        alt={model.weather} 
+        class="w-12 h-12 sm:w-16 sm:h-16 mx-auto" 
+        />
+        <!-- Desktop FavoriteButton -->
+        <div class="hidden sm:block">
+          <FavoriteButton model={model.favoriteButton} />
+        </div>                
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <p class="text-[14px] sm:text-base py-0">{model.date}</p>
+      
+        <!-- Mobile-only FavoriteButton, shown next to date -->
+        <div class="sm:hidden">
           <FavoriteButton model={model.favoriteButton} />
         </div>
-        
       </div>
-
-      <!-- Date -->
-      <p class="text-[14px] sm:text-base py-0 sm:gap-0">Date Here</p> 
 
       <!-- Hidden on mobile -->
       <div class="hidden sm:flex flex-col gap-1 text-base">

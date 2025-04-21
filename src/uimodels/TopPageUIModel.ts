@@ -21,12 +21,14 @@ export interface FavoriteButtonUIModel {
 
 export interface CurrentWeatherCardUIModel {
   location: string;
+  date: string;
   temperature: number;
   humidity: number;
   pressure: number;
   windSpeed: number;
   windDirection: number;
   weather: string;
+  weatherIconImagePath: string;
   favoriteButton: FavoriteButtonUIModel;
 }
 

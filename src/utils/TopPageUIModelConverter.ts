@@ -120,13 +120,17 @@ export const convertToTopPageUIModel = (
   location: LocationResponse
 ): TopPageUIModel => {
   const currentWeather: CurrentWeatherCardUIModel = {
-    location: location.city,
+    location: location.city.split(",")[0].trim(),
+    date: new Date().toISOString().split("T")[0],
     temperature: currentWeatherResponse.current_weather.temperature,
     humidity: currentWeatherResponse.relativehumidity_2m,
     pressure: currentWeatherResponse.surface_pressure,
     windSpeed: currentWeatherResponse.current_weather.windspeed,
     windDirection: currentWeatherResponse.current_weather.winddirection,
     weather: weatherCodeToWeather(
+      currentWeatherResponse.current_weather.weathercode
+    ),
+    weatherIconImagePath: weatherCodeToIconImage(
       currentWeatherResponse.current_weather.weathercode
     ),
     favoriteButton: {
