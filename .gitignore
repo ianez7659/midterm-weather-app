@@ -27,8 +27,7 @@ build/
 out/
 *.map
 
-# Static site build directories
-public/
+
 
 # CSS generated from SCSS/SASS
 *.css.map
