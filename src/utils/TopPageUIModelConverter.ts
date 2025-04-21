@@ -152,23 +152,49 @@ export const convertToTopPageUIModel = (
     })),
   };
 
+  // const hourlyForecast: HourlyForecastSectionUIModel = {
+  //   forecasts: forecastResponse.hourly.time
+  //     .map((time, index) => ({
+  //       time: extractTimeOnly(time),
+  //       temperature: forecastResponse.hourly.temperature[index],
+  //       humidity: forecastResponse.hourly.relativehumidity_2m[index],
+  //       weather: weatherCodeToWeather(
+  //         forecastResponse.hourly.weathercode[index]
+  //       ),
+  //       weatherIconImagePath: weatherCodeToIconImage(
+  //         forecastResponse.hourly.weathercode[index]
+  //       ),
+  //     }))
+  //     // Filter 3 hourly forecast
+  //     .filter((_, index) => index % 3 === 0)
+  //     // Limit to 8 forecasts
+  //     .slice(0, 8),
+  // };
+  const hourlyByDate: HourlyForecastSectionUIModel["hourlyByDate"] = {};
+
+  forecastResponse.hourly.time.forEach((timestamp, index) => {
+    if (index % 3 !== 0) return;
+
+    const [date] = timestamp.split("T");
+    const entry = {
+      time: extractTimeOnly(timestamp), // pass full timestamp
+      temperature: forecastResponse.hourly.temperature[index],
+      humidity: forecastResponse.hourly.relativehumidity_2m[index],
+      weather: weatherCodeToWeather(forecastResponse.hourly.weathercode[index]),
+      weatherIconImagePath: weatherCodeToIconImage(
+        forecastResponse.hourly.weathercode[index]
+      ),
+    };
+
+    if (!hourlyByDate[date]) hourlyByDate[date] = [];
+    if (hourlyByDate[date].length < 8) hourlyByDate[date].push(entry);
+  });
+
+  const sortedDates = Object.keys(hourlyByDate).sort();
+
   const hourlyForecast: HourlyForecastSectionUIModel = {
-    forecasts: forecastResponse.hourly.time
-      .map((time, index) => ({
-        time: extractTimeOnly(time),
-        temperature: forecastResponse.hourly.temperature[index],
-        humidity: forecastResponse.hourly.relativehumidity_2m[index],
-        weather: weatherCodeToWeather(
-          forecastResponse.hourly.weathercode[index]
-        ),
-        weatherIconImagePath: weatherCodeToIconImage(
-          forecastResponse.hourly.weathercode[index]
-        ),
-      }))
-      // Filter 3 hourly forecast
-      .filter((_, index) => index % 3 === 0)
-      // Limit to 8 forecasts
-      .slice(0, 8),
+    forecasts: hourlyByDate[Object.keys(hourlyByDate)[0]], // default: today
+    hourlyByDate,
   };
 
   const backgroundImage: BackgroundImageUIModel = {

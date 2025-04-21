@@ -12,7 +12,7 @@ const { model } = Astro.props;
   <h2 class="text-3xl sm:text-left text-white text-center">Daily Forecast</h2>
 
   {model.forecasts.map((forecast) => (
-    <div class="text-white text-sm mt-8">
+    <div class="text-white text-sm mt-8 cursor-pointer hover:bg-white/20 rounded-md transition" data-date={forecast.date}>
       <div class="grid grid-cols-4 gap-x-12 text-center items-center">
 
         <div>
@@ -42,6 +42,42 @@ const { model } = Astro.props;
     </div>
   ))}
 </div>
+
+<script type="module" is:inline>
+  import { selectDay, getSelectedDate } from '/scripts/forecastState.js';
+
+  const cards = document.querySelectorAll('[data-date]');
+  let selected = null;
+
+  function updateSelection(newDate) {
+    cards.forEach(card => {
+      if (card.dataset.date === newDate) {
+        card.classList.add('bg-white/30');
+      } else {
+        card.classList.remove('bg-white/30');
+      }
+    });
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const date = card.dataset.date;
+      if (selected === date) {
+        selected = null;
+        updateSelection('');
+        selectDay(Object.keys(cards).length ? cards[0].dataset.date : '');
+      } else {
+        selected = date;
+        updateSelection(date);
+        selectDay(date);
+      }
+    });
+  });
+
+  // On load
+  const current = getSelectedDate();
+  if (current) updateSelection(current);
+</script>
 
 
 

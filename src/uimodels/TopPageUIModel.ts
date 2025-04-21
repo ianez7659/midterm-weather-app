@@ -50,6 +50,15 @@ export interface HourlyForecastSectionUIModel {
     weather: string;
     weatherIconImagePath: string;
   }>;
+  hourlyByDate: {
+    [date: string]: Array<{
+      time: string;
+      temperature: number;
+      humidity: number;
+      weather: string;
+      weatherIconImagePath: string;
+    }>;
+  };
 }
 
 export interface BackgroundImageUIModel {
