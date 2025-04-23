@@ -1,30 +1,30 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
-  srcDir: './src',
-  outDir: './dist',
-  publicDir: './public',
+  srcDir: "./src",
+  outDir: "./dist",
+  publicDir: "./public",
   integrations: [tailwind()],
-  
+
   build: {
-    format: 'directory'
+    format: "directory",
   },
 
   server: {
     port: 3000,
-    host: true
+    host: true,
   },
 
   vite: {
     ssr: {
-      noExternal: ['@astrojs/tailwind']
-    }
+      noExternal: ["@astrojs/tailwind"],
+    },
   },
 
-  output: 'server',
+  output: "server",
   adapter: {
-    name: 'astro-default',
-    hooks: {}
-  }
-}); 
+    adapter: vercel(),
+  },
+});
