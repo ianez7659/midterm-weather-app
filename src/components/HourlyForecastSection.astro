@@ -33,7 +33,7 @@ const { model } = Astro.props;
         <div class="flex flex-row items-center justify-between gap-4 sm:gap-x-10 px-4 py-3">
           <p class="w-20 text-left text-sm">${forecast.time}</p>
           <p class="w-12 text-center">${Math.round(forecast.temperature)}°C</p>
-          <img src="/src/assets/icons/thermometer-natural.svg" alt="Thermometer icon" />
+          <img src="/icons/thermometer-natural.svg" alt="Thermometer icon" />
           <img src="${forecast.weatherIconImagePath}" alt="${forecast.weather}" class="w-10 h-10" />
         </div>
       `).join('');
