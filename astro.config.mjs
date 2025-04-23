@@ -13,7 +13,7 @@ export default defineConfig({
     format: "directory",
   },
   server: {
-    port: 3001,
+    port: 3000,
     host: true,
   },
   vite: {
