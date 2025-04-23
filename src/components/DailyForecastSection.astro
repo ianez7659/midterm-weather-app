@@ -9,42 +9,75 @@ const { model } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-2xl font-bold text-white font-bold text-center">Daily Forecast</h2>
+  <h2 class="text-3xl sm:text-left text-white text-center">Daily Forecast</h2>
+
   {model.forecasts.map((forecast) => (
+    <div class="text-white text-sm mt-8 cursor-pointer hover:bg-white/20 rounded-md transition" data-date={forecast.date}>
+      <div class="grid grid-cols-4 gap-x-12 text-center items-center">
 
-    <div class="text-white text-sm" >
+        <div>
+          <p class="w-18">
+            {new Date(forecast.date).toLocaleDateString('en-US', { weekday: 'long' })}
+          </p>
+        </div>
 
-      <div class="grid grid-cols-4 text-center justify-between flex flex-row gap-x-12 m-0 p-0 mt-8">
-
-        <div class=""> 
-          <p class="w-18">{new Date(forecast.date).toLocaleDateString('en-US', { weekday: 'long' })}</p>
-          </div>
-
-        <div class="flex flex-row gap-4 m-0"> 
+        <div class="flex flex-row gap-4">
           <p class="w-12">{forecast.maxTemp}°C</p>
-          <img class="w-3"  src="./src/assets/icons/thermometer-hot.svg"/>
+          <img class="w-3" src="./src/assets/icons/thermometer-hot.svg" />
         </div>
 
-        <div class=" flex flex-row gap-4 m-0"> 
-          <p class="w-12">{forecast.minTemp}°C </p>
-          <img class="w-3" src="./src/assets/icons/thermometer-cold.svg"/>
+        <div class="flex flex-row gap-4">
+          <p class="w-12">{forecast.minTemp}°C</p>
+          <img class="w-3" src="./src/assets/icons/thermometer-cold.svg" />
         </div>
 
-        <div class=""> 
-         <p>{forecast.weather}</p>
+        <div>          
+          <img
+            src={forecast.weatherIconImagePath}
+            alt={forecast.weather}
+            class="w-10 h-10"
+          />
         </div>
-
-    <div class="space-y-4 m-4">
-      <div class="flex gap-3">
-        <p class="">Date: {forecast.date}</p>
-        <p>{forecast.maxTemp}°C </p>
-        <p>{forecast.minTemp}°C vector</p>
-        <img src={forecast.weatherIconImagePath} alt={forecast.weather} class="w-10 h-10" />
-
-      </div>
+      </div>      
     </div>
-
   ))}
-</div> 
+</div>
+
+<script type="module" is:inline>
+  import { selectDay, getSelectedDate } from '/scripts/forecastState.js';
+
+  const cards = document.querySelectorAll('[data-date]');
+  let selected = null;
+
+  function updateSelection(newDate) {
+    cards.forEach(card => {
+      if (card.dataset.date === newDate) {
+        card.classList.add('bg-white/30');
+      } else {
+        card.classList.remove('bg-white/30');
+      }
+    });
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const date = card.dataset.date;
+      if (selected === date) {
+        selected = null;
+        updateSelection('');
+        selectDay(Object.keys(cards).length ? cards[0].dataset.date : '');
+      } else {
+        selected = date;
+        updateSelection(date);
+        selectDay(date);
+      }
+    });
+  });
+
+  // On load
+  const current = getSelectedDate();
+  if (current) updateSelection(current);
+</script>
+
 
 

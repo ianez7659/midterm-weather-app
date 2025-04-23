@@ -1,18 +1,18 @@
+<div class="relative w-full max-w-md">
 
-<div class="relative">
   <button
     id="favoriteDropdownButton"
-    class="hover:bg-gray-100 hover:text-black bg-transparent border-b border-white placeholder-white text-white focus:outline-none"
+    class="w-full text-left bg-transparent border-b border-white text-white placeholder-white focus:outline-none"
   >
     Favorite Cities
   </button>
+
   <div
     id="favoriteDropdown"
-    class="bg-transparent  border-white placeholder-white text-white focus:outline-none"
+    class="absolute left-0 top-full mt-1 w-full bg-white border border-white text-black shadow-md z-10 opacity-0 invisible transition-all duration-200 ease-in-out"
   >
-    <div id="favoriteCitiesList" class="hidden">
-    </div>
-    <div id="noFavoritesMessage" class="p-2 text-white">
+    <div id="favoriteCitiesList" class="hidden"></div>
+    <div id="noFavoritesMessage" class="p-2">
       No favorite cities
     </div>
   </div>
